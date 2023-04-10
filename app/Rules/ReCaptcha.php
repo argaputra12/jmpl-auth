@@ -21,7 +21,7 @@ class ReCaptcha implements ValidationRule
     public function passes($attribute, $value)
     {
         $response = Http::get("https://www.google.com/recaptcha/api/siteverify", [
-            'secret' => "6LfQ8mIlAAAAAPpnVaKuhU7n_BXdtIE63w2sJazs",
+            'secret' => "6LcNs3MlAAAAAF_JtHmcxIYfXP2bQDcafoo8_kaU",
             'response' => $value,
         ]);
 

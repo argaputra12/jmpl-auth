@@ -31,7 +31,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $vars = array(
-            'secret' => "6LfQ8mIlAAAAAPpnVaKuhU7n_BXdtIE63w2sJazs",
+            'secret' => "6LcNs3MlAAAAAF_JtHmcxIYfXP2bQDcafoo8_kaU",
             "response" => $request->input('recaptcha_v3')
         );
         $url = "https://www.google.com/recaptcha/api/siteverify";
@@ -47,8 +47,8 @@ class RegisteredUserController extends Controller
 
             $request->validate([
                 'name' => ['required', 'string', 'max:255', 'min:4'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
+                'password' => ['required', 'confirmed', 'min:6', 'max:255', 'alpha_num'],
             ]);
 
             $user = User::create([
@@ -62,10 +62,8 @@ class RegisteredUserController extends Controller
             Auth::login($user);
 
             return redirect(RouteServiceProvider::HOME);
-
         } else {
             return redirect()->back()->with('error', 'Please verify that you are not a robot.');
         }
-
     }
 }

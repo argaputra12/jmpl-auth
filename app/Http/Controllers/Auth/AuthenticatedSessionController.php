@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
+use Termwind\Components\Dd;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -27,10 +28,11 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $vars = array(
-            'secret' => "6LfQ8mIlAAAAAPpnVaKuhU7n_BXdtIE63w2sJazs",
+            'secret' => "6LcNs3MlAAAAAF_JtHmcxIYfXP2bQDcafoo8_kaU",
             "response" => $request->input('recaptcha_v3')
         );
         $url = "https://www.google.com/recaptcha/api/siteverify";
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -43,21 +45,19 @@ class AuthenticatedSessionController extends Controller
         if ($response['success'] && $response['action'] == 'homepage' && $response['score'] > 0.5) {
 
             $validator = Validator::make($request->all(), [
-                'email' => 'required|email',
-                'password' => 'required',
+                'email' => 'required|email|min:3|max:255',
+                'password' => 'required|min:3|max:255|alpha_num',
             ]);
 
             if ($validator->fails()) {
-                return redirect()->back()->with('error', 'Please fill all the fields');
+                return redirect()->back()->with('error', 'Please fill in the form according to the regulations.');
             }
 
-            $credentials = $request->only('email', 'password');
+            $request->authenticate();
 
-            if (Auth::attempt($credentials)) {
-                $request->session()->regenerate();
+            $request->session()->regenerate();
 
-                return redirect()->intended(RouteServiceProvider::HOME);
-            }
+            return redirect()->intended(RouteServiceProvider::HOME);
 
         } else {
 

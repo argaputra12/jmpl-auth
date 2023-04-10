@@ -52,20 +52,20 @@
     </div>
 
     <div class="mt-6 mb-3 flex justify-center">
-        <a href="{{ route('login.google') }}" class="py-2 px-4 bg-slate-200 hover:bg-white duration-300 transition-all text-center rounded-md w-full">
-          Sign In Using Google Account
-        </a>
+      <a href="{{ route('login.google') }}"
+        class="py-2 px-4 bg-slate-200 hover:bg-white duration-300 transition-all text-center rounded-md w-full">
+        Sign In Using Google Account
+      </a>
     </div>
-
 
   </form>
 
   <!-- Google Captcha -->
-  <script src="https://www.google.com/recaptcha/api.js?render=6LfQ8mIlAAAAAMjrR_-Q8-uk2PhAe_5O2JQxBSKJ"></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LcNs3MlAAAAABs9YxsvEJ6_wD-BCJ-XsLMlmVrn"></script>
 
   <script>
     grecaptcha.ready(function() {
-      grecaptcha.execute("6LfQ8mIlAAAAAMjrR_-Q8-uk2PhAe_5O2JQxBSKJ", {
+      grecaptcha.execute("6LcNs3MlAAAAABs9YxsvEJ6_wD-BCJ-XsLMlmVrn", {
         action: 'homepage'
       }).then(function(token) {
         if (token) {
